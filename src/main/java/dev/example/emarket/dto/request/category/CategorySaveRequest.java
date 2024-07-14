@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategorySaveRequest {
-    @NotNull
+    @NotNull(message = "Kategori adi bos veya null olamaz.")
     @NotEmpty
     private String name;
 

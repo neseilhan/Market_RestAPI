@@ -25,13 +25,13 @@ public class CategoryController {
 
     /*
 {
-    "success" : true,
-    "message" : "Veri kayit edildi."
-    "code" : "201",
+    "success" : false,
+    "message" : "Veri dogrulama hatasi."
+    "code" : "400",
     "data" : {
         {
-    "id": 2,
-    "name": "Test Kategorisi"
+    "name bos olamaz",
+    "id sifirdan buyuk olmali."
 }
     }
 }
