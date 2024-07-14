@@ -3,6 +3,7 @@ package dev.example.emarket.api;
 import dev.example.emarket.business.abstracts.ICategoryService;
 import dev.example.emarket.core.config.Result;
 import dev.example.emarket.core.config.ResultData;
+import dev.example.emarket.core.config.ResultHelper;
 import dev.example.emarket.core.modelmapper.IModelMapperService;
 import dev.example.emarket.dto.request.category.CategorySaveRequest;
 import dev.example.emarket.dto.response.category.CategoryResponse;
@@ -41,6 +42,6 @@ public class CategoryController {
         Category saveCategory = this.modelMapper.forRequest().map(categorySaveRequest, Category.class);
         this.categoryService.save(saveCategory);
          CategoryResponse categoryResponse = this.modelMapper.forResponse().map(saveCategory, CategoryResponse.class);
-        return new ResultData<>("201", "Veri eklendi.",true , categoryResponse);
+        return ResultHelper.created(categoryResponse);
     }
 }
