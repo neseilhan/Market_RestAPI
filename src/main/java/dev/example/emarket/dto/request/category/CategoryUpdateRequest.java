@@ -1,25 +1,20 @@
-package dev.example.emarket.entities;
+package dev.example.emarket.dto.request.category;
 
-
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "categories")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id", columnDefinition = "serial")
+public class CategoryUpdateRequest {
+
+    @Positive(message = "ID Degeri pozitif sayi olmak zorunda.")
     private int id;
 
-    @Column(name="category_name")
-    @NotNull
+    @NotNull(message = "Kategori ismi bos veya null olamaz.")
     private String name;
 
     public int getId() {

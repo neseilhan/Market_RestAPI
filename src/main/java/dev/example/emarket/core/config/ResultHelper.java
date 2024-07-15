@@ -1,5 +1,8 @@
 package dev.example.emarket.core.config;
 
+import dev.example.emarket.dto.response.CursorResponse;
+import org.springframework.data.domain.Page;
+
 public class ResultHelper {
 
     public static <T> ResultData<T> created(T data){
@@ -12,7 +15,19 @@ public class ResultHelper {
         return new ResultData<>("200", Msg.OK, true, data );
     }
 
+    public static Result ok(){
+        return new Result("200", Msg.OK, true);
+    }
     public static Result notFoundError(String msg){
         return new Result("404", msg, false );
+    }
+    public static <T> ResultData<CursorResponse<T>> cursor(Page<T> pageData) {
+        CursorResponse<T> cursor = new CursorResponse<>();
+        cursor.setItems(pageData.getContent());
+        cursor.setPageNumber(pageData.getNumber());
+        cursor.setPageSize(pageData.getSize());
+        cursor.setTotalElements(pageData.getTotalElements());
+
+        return ResultHelper.success(cursor);
     }
 }

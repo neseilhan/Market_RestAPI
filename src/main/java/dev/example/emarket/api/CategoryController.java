@@ -1,10 +1,12 @@
 package dev.example.emarket.api;
 
 import dev.example.emarket.business.abstracts.ICategoryService;
+import dev.example.emarket.core.config.Result;
 import dev.example.emarket.core.config.ResultData;
 import dev.example.emarket.core.config.ResultHelper;
 import dev.example.emarket.core.modelmapper.IModelMapperService;
 import dev.example.emarket.dto.request.category.CategorySaveRequest;
+import dev.example.emarket.dto.request.category.CategoryUpdateRequest;
 import dev.example.emarket.dto.response.CursorResponse;
 import dev.example.emarket.dto.response.category.CategoryResponse;
 import dev.example.emarket.entities.Category;
@@ -12,8 +14,6 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.awt.*;
 
 @RestController
 @RequestMapping("/v1/categories")
@@ -67,12 +67,22 @@ public class CategoryController {
         Page<CategoryResponse> categoryResponsePage = categoryPage
                 .map(category -> this.modelMapper.forResponse().map(category, CategoryResponse.class));
 
-        CursorResponse<CategoryResponse> cursor = new CursorResponse<>();
-        cursor.setItems(categoryResponsePage.getContent());
-        cursor.setPageNumber(categoryResponsePage.getNumber());
-        cursor.setPageSize(categoryResponsePage.getSize());
-        cursor.setTotalElements(categoryResponsePage.getTotalElements());
+        return ResultHelper.cursor(categoryResponsePage);
+    }
 
-        return ResultHelper.success(cursor);
+    @PutMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<CategoryResponse> update(@Valid @RequestBody CategoryUpdateRequest categoryUpdateRequest){
+//        this.categoryService.get(categoryUpdateRequest.getId());
+        Category updateCategory = this.modelMapper.forRequest().map(categoryUpdateRequest, Category.class);
+        this.categoryService.update(updateCategory);
+        return ResultHelper.success(this.modelMapper.forResponse().map(updateCategory, CategoryResponse.class));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Result delete(@PathVariable("id") int id){
+        this.categoryService.delete(id);
+        return ResultHelper.ok();
     }
 }

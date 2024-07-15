@@ -34,4 +34,18 @@ public class CategoryManager implements ICategoryService {
         Pageable pageable = PageRequest.of(page, pageSize);
         return this.categoryRepo.findAll(pageable);
     }
+
+    @Override
+    public Category update(Category category) {
+        this.get(category.getId());
+        return this.categoryRepo.save(category);
+    }
+
+    @Override
+    public boolean delete(int id) {
+
+        Category category = this.get(id);
+        this.categoryRepo.delete(category);
+        return true;
+    }
 }
