@@ -12,7 +12,7 @@ RestApi program of a market that has products, categories and suppliers of these
 
 ## Features
 
-- **Category Management:** CRUD operations for book categories.
+- **Category Management:** CRUD operations for product categories.
 - **Supplier Management:** CRUD operations for suppliers.
 - **Product Management:** CRUD operations for products, including retrieval by categories and suppliers.
 
